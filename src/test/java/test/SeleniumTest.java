@@ -1,12 +1,14 @@
 package test;
 
 import models.Form;
+import models.Planet;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -66,29 +68,44 @@ public class SeleniumTest {
     @Test
     public void FillOutAnotherForm(){
 
-
+        String name = "Tales";
+        String email = "tales.pinto@hotmail.com";
+        String state = "NSW";
 
         Form form = new Form(driver);
         form.openForm();
-        form.enterName("Tales");
-        form.enterEmail("tales.pinto@hotmail.com");
-        form.state("NSW");
+        form.enterName(name);
+        form.enterEmail(email);
+        form.state(state);
         form.checkbox();
         form.submit();
 
         By popUpMessage = By.className("popup-message");
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(
                 ExpectedConditions.visibilityOfElementLocated(popUpMessage));
-        Assertions.assertEquals("Thanks for your feedback Tales", driver.findElement(popUpMessage).getText());
+        Assertions.assertEquals("Thanks for your feedback " + name, driver.findElement(popUpMessage).getText());
+
+    }
+
+    @Test
+    public void EarthExplore(){
+
+        String getPlanet = "Earth";
+
+        Planet planet = new Planet(driver);
+
+        planet.openPlanetPage();
+        planet.findPlanet(getPlanet);
+
 
     }
 
 
 
-        @AfterEach
-    public void quit(){
-        driver.quit();
-    }
+//        @AfterEach
+//    public void quit(){
+//        driver.quit();
+//    }
 
 
     private void WaitTransition(By byButtom) {

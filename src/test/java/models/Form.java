@@ -1,6 +1,7 @@
 package models;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -35,10 +36,10 @@ public class Form {
         for (WebElement currentElement : driver.findElements(By.cssSelector("[role=option]"))){
             if(currentElement.getText().equalsIgnoreCase(state)) {
                 currentElement.click();
-                break;
+                return;
             }
         }
-
+        throw new NotFoundException("could not find" + state);
     }
 
     public void checkbox() {
